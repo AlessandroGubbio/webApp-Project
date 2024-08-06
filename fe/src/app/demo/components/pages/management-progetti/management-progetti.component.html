@@ -1,0 +1,104 @@
+<div class="grid">
+    <div class="col-8 md:col-5">
+        <div class="card p-fluid" style="min-height: 600px; max-height: 600px;">
+            <div>                
+                <form [formGroup]="insertProgettoForm">                    
+                    <div class="col-12 ">
+                        <h2 class="mt-0 font-semibold mb-2" style="flex: 1; font-size: 22px; letter-spacing: 2px;">INSERIMENTO NUOVO PROGETTO</h2>
+                        
+                        <br><br>
+                        <p-inputGroup>
+                            <input type="text" pInputText formControlName="nomeProgetto" (keyup)="calculateProgress()" id="nomeProgetto" placeholder="Nome Progetto" />
+                            <p-inputGroupAddon>
+                                <i class="pi pi-tag"></i>
+                            </p-inputGroupAddon>
+                        </p-inputGroup>
+                    </div>
+                    <div class="col-12 ">
+                        <p-inputGroup>
+                            <input type="text" pInputText formControlName="nomeCliente" (keyup)="calculateProgress()" id="nomeCliente" placeholder="Nome Cliente" />
+                            <p-inputGroupAddon>
+                                <i class="pi pi-users"></i>
+                            </p-inputGroupAddon>
+                        </p-inputGroup>
+                    </div>
+                    <div class="col-12 md:col-12">
+                    <p-calendar
+                        placeholder="Data inizio"
+                        formControlName="dataInizio"
+                        id="dataInizio"
+                        (keyup)="calculateProgress()"
+                        [showIcon]="true"
+                        [showOnFocus]="false"
+                    ></p-calendar>
+                    </div>
+                    <div class="col-12 md:col-12">
+                    <p-calendar
+                        placeholder="Data fine"
+                        formControlName="dataFine"
+                        id="dataFine"
+                        (keyup)="calculateProgress()"
+                        [showIcon]="true"
+                        [showOnFocus]="false"
+                    ></p-calendar>
+                    </div>
+                    
+                    <div class="card">
+                        <p-progressBar id="my-progress-bar" [value]="calculateProgress()" [ngClass]="'customProgress'"></p-progressBar>
+                    </div>
+                   
+                    <button pButton pRipple label="Submit" (click)="insertProgetto()" id="search" class="w-full p-3 text-xl" >
+                    </button>   
+                </form>     
+            </div>
+        </div>       
+    </div>
+    <div class="col-13 md:col-7" >
+		<div class="card" style="min-height: 600px; max-height: 600px;">
+            
+            <div style="display: flex; align-items: center; margin-bottom: 18.5px;" >
+                <h2 class="mt-0 font-semibold mb-2" style="flex: 1; font-size: 22px; letter-spacing: 2px;">PROGETTI IN CORSO</h2>
+                <div class="col-12 mb-2 lg:col-4 lg:mb-0" style="width: 300px; transform: translateX(38px);">
+                    <span class="p-input-icon-left p-input-icon-right">
+                        <i class="pi pi-user"></i>
+                        <input type="text" pInputText placeholder="Cerca Progetto" [(ngModel)]="searchTerm" (keyup)="searchProject()"/>
+                        <i class="pi pi-search" (click)="searchProject()"></i>
+                    </span>
+                </div>
+            </div>
+            <div class="card" style="overflow-x: auto;">
+                <p-table
+                [value]="progetti"
+                [paginator]="true"
+                [rows]="4"
+                [tableStyle]="{ 'min-width': '45rem' }"
+                [rowsPerPageOptions]="[5, 10, 20]"
+            >
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th style="width: 40px;">ID</th>
+                        <th style="width: 90px;">Titolo</th>
+                        <th style="width: 90px;">Nome Cliente</th>
+                        <th style="width: 90px;">Data Inizio</th>
+                        <th style="width: 90px;">Data Fine</th>
+                        <th style="width: 40px;">Elimina</th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-progetto>
+                    <tr>
+                        <td>{{ progetto.id_progetto}}</td>
+                        <td>{{ progetto.titolo}}</td>
+                        <td>{{ progetto.nome_cliente }}</td>
+                        <td>{{ progetto.data_inizio }} </td>
+                        <td>{{ progetto.data_fine }}</td>
+                        <td style="transform: translateX(10px)"><p-button icon="pi pi-times" severity="danger" (click)="deleteRecord(progetto)"/></td>
+                    </tr>
+                </ng-template>
+                </p-table>
+                <p-toast/>
+            </div>
+		</div>
+    </div>
+</div>
+
+

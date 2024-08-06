@@ -1,0 +1,87 @@
+<div class="grid">
+    <div class="col-8 md:col-5">
+        <div class="card p-fluid">
+            <div>                
+                <form [formGroup]="insertDocumentForm">                    
+                    <div class="col-12 ">
+                        <h2 class="mt-0 font-semibold mb-2" style="flex: 1; font-size: 22px; letter-spacing: 2px;">DOCUMENTO</h2>
+                        <h6>Inserimento buste paga</h6>
+                        <br><br>
+                        <p-inputGroup>
+                            <input type="number" pInputText formControlName="userId" id="userId" placeholder="ID Dipendente" />
+                            <p-inputGroupAddon>
+                                <i class="pi pi-user"></i>
+                            </p-inputGroupAddon>
+                        </p-inputGroup>
+                    </div>
+                    <div class="col-12 md:col-12">
+                        <p-calendar 
+                        placeholder="Data rilascio documento"
+                        formControlName="date"
+                        id="date"
+                        [(ngModel)]="date1" 
+                        [showIcon]="true" 
+                        [showOnFocus]="false" 
+                        inputId="buttondisplay" />
+                    </div>
+                    <div class="col-12">
+                        <div class="card flex justify-content-center">
+                            <div class="custom-file-upload">
+                                <input type="file" accept=".pdf" value="INSERISCI" (change)="onFileSelected($event)">
+                                <button class="btn"><i class="pi pi-upload margin"></i>Seleziona File</button>
+                                <div *ngIf="showFile" class="center mt-3">
+                                    <p>{{this.selectedFile.name}}</p>
+                                </div>
+                            </div>
+                        </div>
+                      <br> 
+                    </div>
+                    <button pButton pRipple label="Submit" (click)="insertDocument()" id="search" class="w-full p-3 text-xl" >
+                    </button>   
+                </form>     
+            </div>
+        </div>       
+    </div>
+    <div class="col-13 md:col-7">
+		<div class="card">
+            
+            <div style="display: flex; align-items: center; margin-bottom: 18.5px;" >
+                <h2 class="mt-0 font-semibold mb-2" style="flex: 1; font-size: 22px; letter-spacing: 2px;">DIPENDENTI</h2>
+                <div class="col-12 mb-2 lg:col-4 lg:mb-0" style="width: 300px; transform: translateX(38px);">
+                    <span class="p-input-icon-left p-input-icon-right">
+                        <i class="pi pi-user"></i>
+                        <input type="text" pInputText placeholder="Cerca Utente" [(ngModel)]="searchTerm" (keyup)="searchUser()"/>
+                        <i class="pi pi-search" (click)="searchUser()"></i>
+                    </span>
+                </div>
+            </div>
+            <div class="card">
+                <p-table
+                [value]="impiegato"
+                [paginator]="true"
+                [rows]="5"
+                [tableStyle]="{ 'min-width': '35rem' }"
+                [rowsPerPageOptions]="[5, 10, 20]"
+            >
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th style="width: 40px;">ID</th>
+                        <th>Nome</th>
+                        <th style="width: 50px;">Email</th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-impiegato>
+                    <tr>
+                        <td>{{ impiegato.idUser}}</td>
+                        <td>{{ impiegato.nome }} {{ impiegato.cognome }}</td>
+                        <td>{{ impiegato.mail }}</td>
+                    </tr>
+                </ng-template>
+                </p-table>
+                <p-toast/>
+            </div>
+		</div>
+    </div>
+</div>
+
+

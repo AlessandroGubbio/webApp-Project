@@ -1,0 +1,56 @@
+
+    <div class="mb-3">
+		<div class="card p-fluid">
+            <div style="display: flex; margin-bottom: 18.5px;" >
+                <h2 class="mt-0 font-semibold mb-2" style="flex: 1; font-size: 25px; letter-spacing: 2px;transform: translateY(15px);">LISTA DIPENDENTI</h2>
+                <div class="col-12" style="width: 300px;transform: translateX(12px);">
+                    <span class="p-input-icon-left p-input-icon-right">
+                        <i class="pi pi-user"></i>
+                        <input type="text" pInputText placeholder="Cerca Utente" [(ngModel)]="searchTerm" (keyup)="searchUser()"/>
+                        <i class="pi pi-search" (click)="searchUser()"></i>
+                    </span>
+                </div>
+            </div>
+                <div class="card">
+                    <p-table
+                    [value]="users"
+                    [paginator]="true"
+                    [rows]="5"
+                    [tableStyle]="{ 'min-width': '65rem' }"
+                    [rowsPerPageOptions]="[5, 10, 20]"
+                >
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <th >ID</th>
+                            <th style="width: 180px;">Nome</th>
+                            <th style="width: 180px;">Cogome</th>
+                            <th style="width: 280px;" >Email</th>
+                            <th >Documenti</th>
+                            <th >Aggiorna</th>
+                            <th >Cancella</th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-user>
+                        <tr (mouseover)="rowHover($event, true)" (mouseout)="rowHover($event, false)">
+                            <td>{{ user.idUser }}</td>
+                            <td><input type="text" [(ngModel)]="user.nome" nome="nome" pInputText></td>
+                            <td><input type="text" [(ngModel)]="user.cognome" nome="cognome" pInputText></td>
+                            <td><input type="email" [(ngModel)]="user.mail" nome="email" pInputText></td>
+                            <td style="transform: translateX(15px)"><p-button icon="pi pi-folder-open" severity="secondary" routerLink="/pages/dipendenti-docs/{{user.idUser}}"/></td>
+                            <td style="transform: translateX(10px)"><p-button  icon="pi pi-check" severity="success" (click)="updateRecord(user)"/></td>
+                            <td style="transform: translateX(10px)"><p-button icon="pi pi-times" severity="danger" (click)="deleteRecord(user)"/></td>
+                            <style>
+                                tr:hover {
+                                    color: rgb(240, 119, 6);
+                                }
+                              </style>
+                        </tr>
+                    </ng-template>
+                    </p-table>
+                    <p-toast/>
+                </div>
+		</div>
+    </div>
+
+
+

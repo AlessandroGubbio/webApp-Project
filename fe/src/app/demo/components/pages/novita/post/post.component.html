@@ -1,0 +1,36 @@
+<div class="grid p-fluid">
+	<div class="col-12 md:col-12">
+		<div class="card">
+            <h2 class="mt-0 font-semibold mb-5" style="font-size: 25px; letter-spacing: 2px;">POST</h2>
+
+            <form [formGroup]="this.newsForm">
+                <h5 class="mb-5">Titolo</h5>
+                <span class="p-float-label">
+                    <input id="float-input" type="text" pInputText formControlName="title">
+                    <label for="float-input">inserisci un titolo</label>
+                </span>
+
+                <h5 class="mb-5">Articolo</h5>
+                <span class="p-float-label">
+                    <textarea rows="8" cols="30" style="line-height: 1.5;"  pInputTextarea [autoResize]="true"  formControlName="description"></textarea>
+                    <label for="float-input">corpo della notizia</label>
+                </span>
+                
+                <h5 style="margin-top: 30px; margin-bottom: 2px;">Immagine</h5>
+                <p style="font-size: 10px;">formato jpg</p>
+                <div class="card flex justify-content-center">
+                    <p-toast />
+                    <div class="custom-file-upload">
+                        <input type="file" accept=".jpg" value="INSERISCI" (change)="onFileSelected($event)">
+                        <button class="btn"><i class="pi pi-upload margin"></i>INSERISCI</button>
+                        <div *ngIf="showFile" class="center mt-3">
+                            <p>{{this.selectedFile.name}}</p>
+                        </div>
+                    </div>
+                    <p-toast />    
+                        
+                </div>
+             <button pButton pRipple label="INVIA" (click)="submitData(); " class="w-full p-3 text-xl"></button>
+        </form> 
+    </div>
+</div>

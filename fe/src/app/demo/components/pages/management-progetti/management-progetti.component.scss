@@ -1,0 +1,29 @@
+
+  .margin{
+    margin-right: 15px;
+    font-size: 1.4rem;
+  }
+
+  .center{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .custom-progress-bar {
+    --p-progress-bar-fill-color: green;
+  }
+
+  #my-progress-bar {
+    width: 80% !important;
+    background-color: #eee !important;
+    height: 10px !important;
+    border-radius: 5px !important;
+  }
+
+  
+
+  ::ng-deep .customProgress .p-progressbar-value {
+    background: rgba(34,197,94,255);
+    color: #fff;
+  } 

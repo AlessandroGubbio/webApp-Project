@@ -1,0 +1,131 @@
+/* You can add global styles to this file, and also import other style files */
+
+$gutter: 1rem; //for primeflex grid system
+@import "assets/layout/styles/layout/layout.scss";
+
+/* PrimeNG */
+@import "../node_modules/primeng/resources/primeng.min.css";
+@import "../node_modules/primeflex/primeflex.scss";
+@import "../node_modules/primeicons/primeicons.css";
+
+/* Demos */
+@import "assets/demo/styles/flags/flags.css";
+@import "assets/demo/styles/badges.scss";
+@import "assets/demo/styles/code.scss";
+
+::selection {
+    background:  rgba($color: #eb6600, $alpha: 1);
+    color: white;
+
+  }
+
+body{
+    background-image: linear-gradient(45deg, rgba(#ff0000, 0.9) 10% ,  rgba(#ec7e01, 0.9) 60%, rgba(#fbff00, 0.9));    
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover; 
+    min-height: 100vh;
+    background-size: 400% 400%;
+    animation: anim 15s ease infinite;
+}
+
+
+.back_1{
+    margin-top: 300px;
+    margin-left: 900px;
+    z-index: -1;
+    position: fixed;
+    width: 800px;
+    height: 800px;
+    opacity: 50%;
+    background-image: linear-gradient(45deg, rgba(#ffaea8, 0.9) 10% ,  rgba(#ffce95, 0.9) 60%, rgba(#fafd78, 0.9));   
+    animation: move 15s infinite ease-in-out;
+}
+.back_2{
+    margin-top: 325px;
+    margin-left: 925px;
+    z-index: -1;
+    position: fixed;
+    width: 800px;
+    opacity: 80%;
+    height: 800px;
+    background-image: linear-gradient(45deg, rgba(#ff3829, 0.9) 10% ,  rgba(#ffa63f, 0.9) 60%, rgba(#f3f700, 0.9));   
+    animation: move_2 15s infinite ease-in-out;
+}
+
+.back_3{
+    margin-top: -100px;
+    margin-left: -100px;
+    z-index: -1;
+    position: fixed;
+    width: 800px;
+    height: 800px;
+    opacity: 50%;
+    background-image: linear-gradient(45deg, rgba(#ffaea8, 0.9) 10% ,  rgba(#ffce95, 0.9) 60%, rgba(#fafd78, 0.9));   
+    animation: move 15s infinite ease-in-out;
+}
+
+.back_4{
+    margin-top: -75px;
+    margin-left: -75px;
+    z-index: -1;
+    position: fixed;
+    width: 800px;
+    height: 800px;
+    opacity: 50%;
+    background-image: linear-gradient(45deg, rgba(#ff3829, 0.9) 10% ,  rgba(#ffa63f, 0.9) 60%, rgba(#f3f700, 0.9));   
+    animation: move_2 15s infinite ease-in-out;
+}
+
+
+@keyframes move{
+    0%,100%{
+        border-radius: 42% 58% 70% 30% / 45% 45% 55% 55%;
+        transform: rotate(0deg);
+        transform: translateY(-20px);
+    }
+    30%{
+        border-radius: 70% 30% 46% 54% / 30% 29% 71% 70%;
+        
+    }
+    50%{
+        border-radius: 100% 60% 60% 100% / 100% 100% 60% 60% ;
+        transform: rotate(90deg);
+        transform: scale(1.2);
+        transform: translateY(0px);
+    }
+}
+
+@keyframes move_2{
+    0%,100%{
+        border-radius: 42% 58% 70% 30% / 45% 45% 55% 55%;
+        transform: rotate(0deg);
+        transform: translateY(20px);
+    }
+    30%{
+        border-radius: 70% 30% 46% 54% / 30% 29% 71% 70%;
+    }
+    50%{
+        border-radius: 100% 60% 60% 100% / 100% 100% 60% 60% ;
+        transform: rotate(90deg);
+        transform: scale(1.2);
+        transform: translateY(0px);
+    }
+}
+
+
+
+@keyframes anim {
+    0%{
+        background-position: 0% 50%;
+        
+    }
+    50%{
+        background-position: 100% 50%;
+    }
+    100%{
+        background-position: 0% 50%;
+    }
+}
+
+

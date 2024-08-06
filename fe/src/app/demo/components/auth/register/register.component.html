@@ -1,0 +1,57 @@
+<form (ngSubmit)="this.executeRegister()" [formGroup]="this.registerForm">
+    <div
+        class="surface-ground flex align-items-center justify-content-center min-h-screen min-w-screen overflow-hidden">
+        <div class="flex flex-column align-items-center justify-content-center mt-3">
+            <img src="assets/layout/images/logo_only_squares.svg"
+                alt="Sakai logo" class="mb-5 w-6rem flex-shrink-0">
+            <div
+                style="border-radius:56px; padding:0.3rem; background: linear-gradient(180deg,#fac461,#F76B1C, rgba(33,150, 243,0) 50%);">
+                <div class="w-full surface-card py-8 px-5 sm:px-8" style="border-radius:53px">
+                    <div class="text-center mb-5">
+                        <img src="assets/demo/images/login/racoon-pedro.gif" alt="Image" height="80" class="mb-3" style="border-radius: 50%;">
+                        <div class="text-900 text-3xl font-medium mb-3">Benvenuto!</div>
+                        <span class="text-600 font-medium">Esegui la registrazione per proseguire</span>
+                    </div>
+
+                    <div>
+                        <label for="email" class="block text-900 text-xl font-medium mb-2">Email</label>
+                        <input id="email" type="text" placeholder="Email address" pInputText formControlName="mail"
+                            class="w-full md:w-30rem mb-5" style="padding:1rem">
+
+                        <label for="nome" class="block text-900 text-xl font-medium mb-2">Nome</label>
+                        <input id="nome" type="text" placeholder="First Name" pInputText formControlName="nome"
+                            class="w-full md:w-30rem mb-5" style="padding:1rem">
+
+                        <label for="cognome" class="block text-900 text-xl font-medium mb-2">Cognome</label>
+                        <input id="cognome" type="text" placeholder="Last Name" pInputText formControlName="cognome"
+                            class="w-full md:w-30rem mb-5" style="padding:1rem">
+
+                        <label for="password" class="block text-900 font-medium text-xl mb-2">Password</label>
+                        <p-password id="password" placeholder="Password" [toggleMask]="true" formControlName="password"
+                            styleClass="mb-5" inputStyleClass="w-full p-3 md:w-30rem"></p-password>
+
+                        <h5 style="margin-top: 30px; margin-bottom: 2px;">Immagine Profilo</h5>
+                        <div class="card flex justify-content-center">
+                            <p-toast />
+                            <div class="custom-file-upload">
+                                <input type="file" accept=".jpg" value="INSERISCI" (change)="onFileSelected($event)">
+                                <button class="btn"><i class="pi pi-upload margin"></i>INSERISCI</button>
+                                <div *ngIf="showFile" class="center mt-3">
+                                    <p>{{this.selectedFile.name}}</p>
+                                </div>
+                            </div>
+                            <p-toast />    
+                                
+                        </div>
+
+                        <div class="flex align-items-center justify-content-between mb-5 gap-5">
+
+                        </div>
+                        <button pButton pRipple label="Registrati" class="w-full p-3 text-xl mb-4 login-btn"></button> 
+                        <a label="Register" class="w-full p-3 text-xl register-link" routerLink="">Log in</a> 
+                    </div>
+                </div>                
+            </div>
+        </div>
+    </div>
+</form>

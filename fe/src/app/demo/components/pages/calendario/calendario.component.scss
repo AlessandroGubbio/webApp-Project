@@ -1,0 +1,56 @@
+.p-calendar {
+    width: 100%;
+    border-radius: 7px;
+  }
+  
+  .p-calendar table {
+    border-collapse: collapse;
+    width: 100%;
+  }
+  
+  .p-calendar th {
+
+    padding: 10px 10px;
+    background-color: #f2f2f2;
+    font-weight: bold;
+  }
+  
+  .p-calendar td {
+    text-align: center;
+    padding: 10px;
+    cursor: pointer; 
+  }
+  
+  .p-calendar .empty {
+    color: #ccc;
+  }
+  
+  .p-calendar .today {
+    background-color: #f0f0f0;
+    font-weight: bold;
+    border-radius: 7px;
+  }
+  
+  .p-calendar .selected {
+    background-color: #6864f4;
+    color: #fff;
+    border-radius: 7px;
+    font-weight: bold;
+  }
+
+  .anim{
+    animation: popUp 0.2s linear ;
+  }
+
+  @keyframes popUp {
+    0%{
+      transform: scale(1);
+    }
+    50%{
+      transform: scale(1.05);
+    }
+    100%{
+      transform: scale(1);
+    }
+    
+  }

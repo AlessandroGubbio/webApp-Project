@@ -1,0 +1,162 @@
+<div class="card">
+<p-toast />
+<p-dialog 
+    header="Header" 
+    [(visible)]="visible" 
+    [draggable]="false"
+    [resizable]="false"
+    [modal]="true" 
+    [style]="{ width: '45rem', height: '40rem' }">
+        <ng-template pTemplate="header">
+            <div class="inline-flex align-items-center justify-content-center gap-2">
+                <img class="ml-4 mt-4" *ngIf="this.selectedUtente?.image" src="data:image/jpeg;base64,{{this.selectedUtente.image}}" 
+                style="border-radius: 50%; width: 85px; height: 85px; object-fit: cover; border: 2px solid rgb(71, 71, 71); padding: 2px;">
+                <i *ngIf="!this.selectedUtente?.image" class="pi pi-user ml-4 mt-4" style="font-size: 4rem; border: 2px solid rgb(72, 72, 72); border-radius: 50%; padding: 12px;"></i>
+                <span class="font-bold white-space-nowrap mt-4" style="margin-left: 40px;">
+                    <div class="flex justify-content-center">
+                        <p-autoComplete 
+                            [style]="{width: '340px'}"
+                            placeholder="Destinatario"
+                            [(ngModel)]="selectedUtente" 
+                            [dropdown]="true" 
+                            severity="secondary"
+                            [suggestions]="filteredUtente" 
+                            (completeMethod)="filterUtenti($event)" 
+                            field="mail" />
+                    </div>
+                </span>
+            </div>
+        </ng-template>
+        <hr>
+        <div class="flex align-items-center gap-3 mb-3">
+            <label for="username" class="font-semibold w-6rem">
+                Titolo: 
+            </label>
+            <input pInputText class="flex-auto" [(ngModel)]="titolo" autocomplete="off" />
+        </div>
+        <div class="flex align-items-center gap-3 mb-5">
+            <label for="messaggio" class="font-semibold w-6rem">Messaggio: </label>
+            <textarea [(ngModel)]="messaggio" [autoResize]="true" pInputTextarea rows="8" cols="30" style="line-height: 1.5;" class="flex-auto" autocomplete="off"></textarea>
+        </div>
+        <ng-template pTemplate="footer">
+            <p-button 
+                label="Cancella" 
+                [text]="true" 
+                severity="secondary" 
+                (onClick)="closeDialog()" />
+            <p-button 
+                label="Invia" 
+                severity="primary" 
+                (onClick)="sendMail()" 
+            />
+        </ng-template>
+    </p-dialog>
+    <p-table [value]="messaggi" dataKey="idMessaggio" [tableStyle]="{ 'min-width': '60rem' }" [expandedRowKeys]="expandedRows">
+        <ng-template pTemplate="caption">
+            <div class="flex justify-content-between">
+                <div style="margin-left: 20px;">
+                    <p-button 
+                        pTooltip="Scrivi"
+                        type="button"
+                        icon="pi pi-pencil" 
+                        (onClick)="showDialog()" 
+                        severity="success"
+                        raised="true"
+                    />
+                    
+                    <p-button 
+                        pTooltip="Ricarica"
+                        class="ml-3"
+                        type="button"
+                        icon="pi pi-refresh" 
+                        (onClick)="reset()" 
+                        severity="secondary"
+                        raised="true"
+                    />
+                </div>
+                
+
+                <div class="flex flex-wrap justify-content-end gap-2">
+                    <p-button label="Espandi tutto" icon="pi pi-plus" text (onClick)="expandAll()" [raised]="true" severity="secondary" />
+                    <p-button label="Chiudi tutto" icon="pi pi-minus" text (onClick)="collapseAll()" [raised]="true" severity="secondary" />
+                </div>
+            </div>
+            
+        </ng-template>
+        <ng-template pTemplate="header">
+            <tr>
+                <th style="width: 2rem"></th>
+                <th style="width: 2rem"></th>
+                <th>Mittente</th>
+                <th>Titolo</th>
+                <th>Messaggio</th>
+                <th>Data</th>
+                <th>Status</th>
+                <th style="width: 4rem"></th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-messaggio let-expanded="expanded">
+            <tr>
+                <td>
+                    <p-button (click)="setStatus(messaggio)" id="seen" type="button" pRipple 
+                        [pRowToggler]="messaggio" [text]="true" [rounded]="true" [plain]="true" 
+                        [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'" />
+                </td>
+                <td>
+                    <img  *ngIf="messaggio.mittente.image" src="data:image/jpeg;base64,{{messaggio.mittente.image}}" alt="Image" height="50px" width="50px" class="mb-3 ml-5" style="border: 1px solid rgb(71, 71, 71); padding: 2px;; border-radius: 100%;object-fit: cover; transform: translateX(-27px)">
+                    <i *ngIf="!messaggio.mittente.image" class="pi pi-user" style="font-size: 1.8rem; transform: translateX(15px);"></i>
+                </td>
+                <td>
+                    {{ messaggio.mittente.mail }}
+                </td>
+                <td>{{ messaggio.titolo }}</td>
+                <td>{{ messaggio.testoMessaggio }}</td>
+                <td>{{ formatDate(messaggio.dataInvio) }}</td>
+                <td>
+                    <p-tag [value]="messaggio.status ? 'letto' : 'nuovo'" [severity]="getStatusSeverity(messaggio.status)" 
+                    [icon]="getIcon(messaggio.status)" [style]="{width: '55px', height: '25px'}"></p-tag>
+                </td>
+                <td><p-button type="button" (click)="deleteMessagge(messaggio)" icon="pi pi-trash" severity="danger"/></td>
+                
+            </tr>
+            
+        </ng-template>
+        <ng-template pTemplate="rowexpansion" let-messaggio>
+            <tr>
+                <td colspan="7">
+                    <div class="p-3">
+                        <div style="display: flex; justify-content: space-between;">
+                            <div style="flex:1">
+                            <p-fieldset>
+                                <ng-template pTemplate="header">
+                                    <div class="flex align-items-center gap-2 px-2">
+                                        <span class="font-bold">{{messaggio.mittente.nome}} {{messaggio.mittente.cognome}}</span>
+                                        <p-button type="button" id="reply" (click)="replyField = true" icon="pi pi-reply" severity="success" 
+                                            pTooltip="Rispondi" tooltipPosition="top" tooltipStyleClass="custom-tooltip"/>
+                                    </div>
+                                </ng-template>
+                                <p class="m-0" style="height: 200px;">
+                                    {{messaggio.testoMessaggio}}
+                                </p>
+                            </p-fieldset>
+                            </div >
+                            <div style="flex:1">
+                            <p-fieldset *ngIf="replyField">
+                                <ng-template pTemplate="header">
+                                    <div class="flex align-items-center gap-2 px-2">
+                                        <span class="font-bold">Rispondi a {{messaggio.mittente.nome}}</span>
+                                        <p-button type="button" (click)="updateMessaggio(messaggio)" icon="pi pi-send" severity="secondary" pTooltip="Invia" tooltipPosition="top" tooltipStyleClass="custom-tooltip"/>
+                                    </div>
+                                </ng-template>
+                                <!-- [readOnly]="messaggio.testoRisposta" -->
+                                <textarea [autoResize]="true" pInputTextarea rows="8" cols="60" style="line-height: 1.5;" (input)="handleInputRisposta($event)" placeholder="{{messaggio.testoRisposta}}" [(ngModel)]="messaggio.testoRisposta" ></textarea>
+                            </p-fieldset>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>

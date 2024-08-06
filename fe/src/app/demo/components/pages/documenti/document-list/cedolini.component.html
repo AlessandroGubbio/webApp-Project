@@ -1,0 +1,48 @@
+<div class="card mb-3" style="min-height: 300px;">
+    <p-toast />
+    <p-table [value]="cedolino" [tableStyle]="{ 'min-width': '50rem' }">
+        <ng-template pTemplate="header">
+            <div style="display: flex; align-items: center; margin-bottom: 50px; justify-content: space-between;"  class="mt-2">
+                <h2 class="mt-0 font-semibold mb-2" style="flex: 1; font-size: 22px; letter-spacing: 2px; transform: translateY(4px);">BUSTE PAGA</h2>
+
+                <!-- <h2 class="mt-0 font-semibold mb-5" style="font-size: 25px; letter-spacing: 2px; color: rgb(74, 74, 74) ;">I miei documenti</h2> -->
+                <div style="transform: translateX(89px); z-index: 999;">
+                    <p-dropdown 
+                        [options]="months" 
+                        [(ngModel)]="selectedMonth" 
+                        optionLabel="name"
+                        placeholder="Seleziona un mese"
+                        (onChange)="onMonthChange($event)"
+                        />
+                </div>
+                    
+            </div>            
+            <tr>
+                <th>Data</th>
+                <th style="width: 5rem; margin-bottom: 20px; transform: translateX(-15px);">Download</th>
+            </tr>
+            <div *ngIf="this.cedoliniCount < 1" style="margin-top: 100px; margin-bottom: 100px;" class="flex justify-content-center">
+                <h5>Nessun Cedolino Trovato per questo mese</h5> 
+            </div>
+        </ng-template>
+
+        
+        
+        <ng-template pTemplate="body" let-cedolino >
+            
+            
+            <tr>
+                <td> {{getDate(cedolino.date)}} </td>
+                <td style="display: flex; align-items:center">
+                    <button 
+                        type="button" 
+                        pButton 
+                        pRipple 
+                        icon="pi pi-download" 
+                        (click)="downloadPDF(cedolino.pdfBase64)">
+                    </button>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>

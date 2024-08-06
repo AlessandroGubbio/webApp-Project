@@ -1,0 +1,131 @@
+<div class="card mb-3">
+    <h2 class="mt-0 font-semibold mb-2" style="font-size: 25px; letter-spacing: 2px;">CALENDARIO</h2>
+    <div class="p-calendar card" style="display: block;">
+        <h4 style="text-align: center; font-weight: 500;">{{ selectedDate.toLocaleDateString('it-IT', { month: 'long', year: 'numeric' }).toLocaleUpperCase()}}</h4>
+        <table>
+          <thead>
+            <tr>
+              <th *ngFor="let day of ['Domenica', 'Lunedì', 'Martedì', 'Mercoledì', 'Giovedì', 'Venerdì', 'Sabato']">{{ day }}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let row of generateCalendar();">
+              <td *ngFor="let dayInfo of row"
+                  class="p-calendar-cell"
+                  (click)="onDateSelect(dayInfo)"
+                  [class.empty]="dayInfo.day === 0"
+                  [class.today]="dayInfo.isToday"
+                  [class.selected]="dayInfo.day === selectedDate?.getDate()">
+                {{ dayInfo.day }}
+              </td>
+            </tr>
+            
+          </tbody>
+        </table>
+        <br> 
+        <div class="flex" style="justify-content: center; transform: translateX(-10px);">
+            <p-button class="m-5" icon="pi pi-chevron-left" iconPos="left" (click)="previousMonth()" label="PRECEDENTE"></p-button>
+            <p-button class="m-5" icon="pi pi-chevron-right" iconPos="right" (click)="nextMonth()" label="PROSSIMO"></p-button>
+        </div>
+        <div *ngIf="this.check" class="flex justify-content-center mb-4" >
+            <div class=" mt-3 mb-3 anim card" style="width: 430px; background-color: rgba(239,68,68,0.8);">
+            <h5 class="font-semibold"style="text-align: center; color: #ffffff; line-height: 20px;" >
+                Attenzione!
+            </h5>
+            <p style="color: white; text-align: center;"> 
+                Per il {{getDate(this.selectedDate)}} è già stata registrata una presenza 
+                <br> 
+                Continuando le informazioni verranno aggiornate 
+            </p>
+        </div>
+        
+        </div>
+        <div *ngIf="this.saturday" class="flex justify-content-center mb-4" >
+            <div class=" mt-3 mb-3 anim card" style="width: 430px; background-color: #6864f4;">
+                <h5 class="font-semibold"style="text-align: center; color: #ffffff; line-height: 20px;" >
+                    Attenzione!
+                </h5>
+                <p style="color: white; text-align: center;"> 
+                    Le ore registrate per il sabato
+                    <br> 
+                    vengono considerate di straordinario
+                </p>
+            </div>
+            
+        </div>
+    
+
+    <h2 class="mt-0 font-semibold mb-2" style="font-size: 25px; letter-spacing: 2px;">Orario lavorativo</h2>
+    <div class="card">
+        <div class="flex justify-content-evenly" >
+            
+            <div>
+                <label for="templatedisplay" class="font-bold block mb-2">Ingresso </label>
+                <p-calendar 
+                    [(ngModel)]="dateIngresso" 
+                    [iconDisplay]="'input'" 
+                    [showIcon]="true" 
+                    [timeOnly]="true" 
+                    inputId="templatedisplay">
+                        <ng-template pTemplate="inputicon" let-clickCallBack="clickCallBack">
+                            <i 
+                                class="pi pi-clock pointer-events-none pointer-events-none" 
+                                (click)="clickCallBack($event)"></i>
+                        </ng-template>
+                </p-calendar>
+            </div>
+            <div>
+                
+                <label for="templatedisplay" class="font-bold block mb-2">Uscita</label>
+                <p-calendar 
+                    [(ngModel)]="dateUscita" 
+                    [iconDisplay]="'input'" 
+                    [showIcon]="true" 
+                    [timeOnly]="true" 
+                    inputId="templatedisplay">
+                        <ng-template pTemplate="inputicon" let-clickCallBack="clickCallBack">
+                            <i 
+                                class="pi pi-clock pointer-events-none pointer-events-none" 
+                                (click)="clickCallBack($event)"></i>
+                        </ng-template>
+                </p-calendar>
+                
+            </div>
+            <div>
+                <label for="progetto" class="font-bold block mb-2">Progetto</label>
+                <p-dropdown 
+                    [options]="progettiName" 
+                    [(ngModel)]="selectedProgetto" 
+                    optionLabel="name"
+                    placeholder="Seleziona un progetto"
+                    (onChange)="onProgettoChange($event)"
+                    />
+            </div>
+        </div>
+    </div>
+    <p class="font-semibold mb-5" style="text-align: center;">La fascia oraria tra le 13:00 e le 14:00 è considerato di pausa pranzo, perciò non verra conteggiato nel totale ore</p>
+
+    <h2 class="mt-0 font-semibold mb-2" style="font-size: 25px; letter-spacing: 2px;">Ore Extra</h2>
+    <div class="card">
+        <div class="flex justify-content-around">
+            <div style="transform: translateX(40px);">
+                <label for="templatedisplay" class="font-bold block mb-2">Permessi (ore)</label>
+                <input type="text" pInputText [(ngModel)]="permessi" class="w-full mb-3"/>
+                <p-slider [(ngModel)]="permessi"  [step]="1" [max]="8" class="w-full" /> 
+            </div>
+            <div style="transform: translateX(-40px);">
+                <label for="templatedisplay" class="font-bold block mb-2">Ferie (ore)</label>
+                <input type="text"  pInputText [(ngModel)]="ferie" class="w-full mb-3"/>
+                <p-slider [(ngModel)]="ferie"  [step]="1" [max]="8" class="w-full" />
+            </div>
+        </div>
+    </div>
+    <p-toast />
+    <button pButton pRipple label="CONFERMA" (click)="submitData()" class="w-full p-3 text-xl"></button>
+    
+    
+</div>
+
+
+
+

@@ -1,0 +1,35 @@
+<div class="layout-topbar">
+    <div class="layout-topbar-logo" style="margin-left: 10px;">
+        <img src="company-image" alt="logo"> 
+        <p class="mt-0 font-semibold" style="font-size: 20px;color: rgb(84, 84, 84); margin-left: 20px;">Company Name</p>
+    </div>
+
+    <button #menubutton class="p-link layout-menu-button layout-topbar-button" (click)="layoutService.onMenuToggle()">
+        <i class="pi pi-bars"></i>
+    </button>
+
+    <button #topbarmenubutton class="p-link layout-topbar-menu-button layout-topbar-button" (click)="layoutService.showProfileSidebar()">
+        <i class="pi pi-ellipsis-v"></i>
+    </button>
+    <div #topbarmenu class="layout-topbar-menu" style="align-items: center;" [ngClass]="{'layout-topbar-menu-mobile-active': layoutService.state.profileSidebarVisible}">
+        <div>
+            <p [routerLink]="'/pages/userpage'" class="w-full md:w-30rem" style="text-align: end;cursor: pointer; font-size: 16px;">{{ userdto.nome.toUpperCase() }} {{userdto.cognome.toUpperCase()}}</p>
+        </div>
+
+        <button pTooltip="Profilo" class="p-link layout-topbar-button" [routerLink]="'/pages/userpage'">
+            <i *ngIf="!userdto.image" class="pi pi-user"></i>
+            <img  *ngIf="userdto.image" src="data:image/jpeg;base64,{{userdto.image}}" style="border: 1px solid rgb(71, 71, 71); padding: 2px; width: 40px; height: 40px; object-fit: cover; border-radius: 50%;" >
+            <span>Profilo</span>
+        </button> 
+
+        <button class="p-link layout-topbar-button" [routerLink]="'/pages/messaggi'">
+            <i class="pi pi-envelope"></i>
+            <span>Messaggi</span>
+        </button> 
+        
+        <button class="p-link layout-topbar-button" (click)="logout()" [routerLink]="'/auth/login'">
+            <i class="pi pi-sign-out"></i>
+            <span>Esci</span>
+        </button>
+    </div>
+</div>

@@ -1,0 +1,39 @@
+<div class="card p-fluid mb-3">
+    <div style="display: flex; align-items: center; margin-bottom: 18.5px;" >
+        <!-- <h5 class="mt-0 font-semibold mb-5" style="flex: 1;transform: translateY(12px);">Lista News</h5> -->
+        <h2 class="mt-0 font-semibold mb-2" style="flex: 1; font-size: 25px; letter-spacing: 2px;">LISTA NOTIZIE</h2>
+        <div class="col-12 mb-2 lg:col-4 lg:mb-0" style="width: 400px; transform: translateX(11px);">
+            <span class="p-input-icon-left p-input-icon-right">
+                <i class="pi pi-book"></i>
+                <input type="text" pInputText placeholder="Cerca per titolo" [(ngModel)]="searchTerm" (keyup)="searchNews()"/>
+                <i class="pi pi-search" (click)="searchNews()"></i>
+            </span>
+        </div>
+    </div>
+        <div class="card">
+            <p-table
+            [value]="news"
+            [paginator]="true"
+            [rows]="5"
+            [tableStyle]="{ 'min-width': '65rem' }"
+            [rowsPerPageOptions]="[5, 10, 20]">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th style="width: 70px;">ID</th>
+                    <th style="width: 300px;">Titolo</th>
+                    <th style="width: 100px;">Aggiorna</th>
+                    <th style="width: 100px;">Elimina</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-news>
+                <tr>
+                    <td>{{news.idNews}}</td>
+                    <td>{{news.title}}</td>
+                    <td style="transform: translateX(11px);"><p-button icon="pi pi-pencil" severity="success" routerLink="/pages/news-update/{{news.idNews}}"/></td>
+                    <td><p-button icon="pi pi-times" severity="danger" (click)="deleteNews(news)"/></td>
+                </tr>
+            </ng-template>
+            </p-table>
+            <p-toast/>
+        </div>
+</div>

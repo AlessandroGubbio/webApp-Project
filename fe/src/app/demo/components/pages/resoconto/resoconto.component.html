@@ -1,0 +1,56 @@
+<div class="card mb-3">
+    <h2 class="mt-0 font-semibold mb-2" style=" font-size: 22px; letter-spacing: 2px; transform: translateY(4px);">RESOCONTO MENSILE</h2>
+
+    <div class="flex justify-content-between mt-5 px-7">
+        <p class="font-semibold" [@monthChange]="selectedMonth" [@monthChange]="selectedYear" style="max-width: 150px; transform: translateY(5px); font-size: 18px; text-decoration: underline;">
+            {{this.selectedMonth.toUpperCase()}} - {{this.selectedYear}}</p>
+        <div>
+            <p-dropdown 
+                class="mr-3"
+                [options]="this.months" 
+                [(ngModel)]="this.selectedMonth" 
+                optionLabel="name"
+                placeholder="Mese" 
+                (onChange)="onMonthChange($event)"
+                />
+            <p-calendar 
+                [style]="{'width':'120px'}"
+                placeholder="Anno"
+                view="year" 
+                [(ngModel)]="selectedYear"
+                [showIcon]="true"
+                dateFormat="yy" 
+                (onSelect)="onYearChange($event)"
+                />
+            </div>
+    </div>
+    
+    <div class="card mt-3" >
+        
+        <p-chart type="line" [data]="data" [options]="options" />
+    </div>
+
+    <h5 class="font-semibold" style="text-align: center;font-size: 22px;">TOTALE</h5>
+    <div class="flex justify-content-center">
+        <div class="card" style="transform: scale(0.9);">
+        
+            <div class="container mt-2 font-semibold" style="font-size: 18px;">
+                <div class="item">
+                    <span class="title">Ore di Lavoro:</span>
+                    <span class="value" style="font-size: 20px;" >{{this.totalWorkedHours}} h</span>
+                </div>
+                <hr>
+                <div class="item">
+                    <span class="title" class="font-semibold">Permessi:</span>
+                    <span class="value">{{this.totalPermessiHours}}</span>
+                </div>
+                <hr>
+                <div class="item">
+                    <span class="title" class="font-semibold">Ferie:</span>
+                    <span class="value">{{this.totalFerieHours}}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+</div>

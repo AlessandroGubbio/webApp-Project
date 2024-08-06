@@ -1,0 +1,22 @@
+server:
+    port: 8080
+    servlet:
+        context-path: /
+        encoding:
+            charset: UTF-8
+spring:
+    application:
+        name: portale-be
+        version: 1.0
+
+    datasource:
+        url: ${DATASOURCE_URL:jdbc:postgresql:}
+        username: ${DATASOURCE_USERNAME:}
+        password: ${DATASOURCE_PASSWORD:}
+        driver-class-name: ${DB_CLASS_DRIVER:org.postgresql.Driver}
+    jpa:
+        hibernate:
+            ddl-auto: update
+        properties:
+            hibernate:
+                dialect: org.hibernate.dialect.PostgreSQLDialect

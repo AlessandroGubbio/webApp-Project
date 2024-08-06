@@ -1,0 +1,84 @@
+<div class="card mb-3" style="min-height: 530px; width: 100%;">
+    <h2 class="mt-0 font-semibold mb-2" style=" font-size: 22px; letter-spacing: 2px; transform: translateY(4px);">STORICO PRESENZE - {{this.selectedMonth.toUpperCase()}} 
+        {{this.selectedYear}}</h2>
+    <br>
+    
+    <p-toast />
+    <p-table [value]="presenza">  
+        <ng-template pTemplate="header">
+            <div style="display: flex; align-items: center; margin-bottom: 10px; justify-content: space-between;"  class="mt-2">
+                
+                <div>  
+                    <p-dropdown 
+                        class="m-2"
+                        [options]="months" 
+                        [(ngModel)]="selectedMonth" 
+                        optionLabel="name"
+                        placeholder="{{this.selectedMonth}}"
+                        (onChange)="onMonthChange($event)"
+                    />
+                </div>
+                <p-calendar 
+                    style="width: 100px"
+                    placeholder="{{this.selectedYear}}"
+                    view="year" 
+                    [(ngModel)]="selectedYear"
+                    [showIcon]="true"
+                    dateFormat="yy" 
+                    (onSelect)="onYearChange($event)"
+                    />
+            </div>    
+            
+            <tr >
+                <th>Data</th>
+                <th>Ingresso</th>
+                <th>Uscita</th>
+                <th>Progetto</th>
+                <th>Ore lavorate</th>
+                <th>Permessi</th>
+                <th>Ferie</th>
+                <th>Elimina</th>
+            </tr>
+
+            <div *ngIf="this.presenzaCount < 1" style="margin-top: 75px; margin-bottom: 75px;" >
+            </div>
+            
+        </ng-template>
+       
+        
+        <ng-template pTemplate="body" let-presenza>
+            <tr >
+                <td>{{getDate(presenza.data)}}</td>
+                <td>{{formatTime(presenza.ingresso)}}</td>
+                <td>{{formatTime(presenza.uscita)}}</td>
+                <td>{{presenza.progetto.titolo}}</td>
+                <td>{{formatHours(presenza.totale)}}</td>
+                <td>{{formatHours(presenza.permesso)}}</td>
+                <td>{{formatHours(presenza.ferie)}}</td>
+                <td><p-button icon="pi pi-trash" severity="danger" (click)="deletePresenza(presenza)"/></td>
+                <style>
+                    tr:hover {
+                      color: rgb(240, 119, 6);
+                      font-weight: bold;
+                    }
+                </style>
+            </tr>
+        </ng-template>
+        
+        <ng-template pTemplate="footer" >
+            <tr class="mt-2">
+                <td colspan="4" class="mt-0 font-semibold mb-2" style="flex: 1; font-size: 22px; letter-spacing: 2px;">TOTALE ORE</td>
+                <td>{{formatHours(calcoloTotaleOreLavorate())}}</td>
+                <td>{{formatHours(calcoloTotaleOrePermessi())}}</td>
+                <td>{{formatHours(calcoloTotaleOreFerie())}}</td>
+                <td></td>
+            </tr>
+        </ng-template>
+    
+    </p-table>
+
+    <div class="flex mt-5 justify-content-end">
+        <p-button label="RESOCONTO" icon="pi pi-external-link" iconPos="right" class="mr-5" routerLink="/pages/resoconto"/>
+    </div>
+
+</div>
